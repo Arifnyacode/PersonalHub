@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
+import 'dart:math';
 
-void main() {
-  runApp(const MyProfile());
-}
+import 'package:flutter/material.dart';
 
 class MyProfile extends StatelessWidget {
   const MyProfile({super.key});
@@ -50,6 +48,16 @@ class MyProfile extends StatelessWidget {
                   SizedBox(width: 10),
                   Text('+62 812-3456-7890'),
                 ],
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Kembali ke Welcome',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),
