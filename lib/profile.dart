@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(const MyProfile());
+}
+
 class MyProfile extends StatelessWidget {
   const MyProfile({super.key});
 
@@ -8,7 +12,7 @@ class MyProfile extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Profil Pertamaku'),
+          title: const Text('Halaman Profil'),
           backgroundColor: Colors.blueAccent,
         ),
         body: Center(
@@ -53,7 +57,7 @@ class MyProfile extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 child: const Text(
-                  'Kembali ke Welcome',
+                  'Kembali ke Dashboard',
                   style: TextStyle(color: Colors.white),
                 ),
               ),

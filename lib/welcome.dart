@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'profil.dart';
+import 'home.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -64,7 +63,7 @@ class WelcomeScreen extends StatelessWidget {
                 //aksi saat tombol ditekan
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const MyProfile()),
+                  MaterialPageRoute(builder: (context) => Home()),
                 );
               },
               child: const Text(
