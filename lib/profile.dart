@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyProfile());
-}
-
 class MyProfile extends StatelessWidget {
   const MyProfile({super.key});
 

@@ -48,8 +48,24 @@ class Home extends StatelessWidget {
               subtitle: const Text('Hari ini'), // Deskripsi singkat
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {
-                print(
-                  "Anda mengklik kegiatan: ${daftarkegiatan[index]}",
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Kegiatan Diklik'),
+                      content: Text(
+                        "Anda mengklik kegiatan: ${daftarkegiatan[index]}",
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Tutup'),
+                        ),
+                      ],
+                    );
+                  },
                 ); // Aksi ketika item diklik (misalnya, navigasi ke detail kegiatan)
               },
             ),
