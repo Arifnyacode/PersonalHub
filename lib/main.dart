@@ -12,7 +12,7 @@ class MyNavbarApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const WelcomeScreen(), // Ini akan memanggil class di bawah
+      home: const WelcomeScreen(), // Set the WelcomeScreen as the home screen
     );
   }
 }

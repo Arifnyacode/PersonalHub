@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personalhub/add_activity.dart';
 import 'profile.dart';
 
 class Home extends StatelessWidget {
@@ -20,10 +21,10 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Dashboard Keuangan'),
         backgroundColor: Colors.indigo,
-        leading: const Icon(Icons.account_balance_wallet),
+        leading: const Icon(Icons.account_balance_wallet, color: Colors.white),
         actions: [
           IconButton(
-            icon: const Icon(Icons.account_circle),
+            icon: const Icon(Icons.account_circle, color: Colors.white),
             onPressed: () {
               // Aksi saat ikon profil ditekan (misalnya, navigasi ke halaman profil)
               Navigator.push(
@@ -71,6 +72,16 @@ class Home extends StatelessWidget {
             ),
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddActivity()),
+          );
+        },
+        backgroundColor: Colors.indigo,
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
