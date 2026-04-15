@@ -9,10 +9,12 @@ class AddActivity extends StatefulWidget {
 
 class _AddActivityState extends State<AddActivity> {
   final TextEditingController _controllerKegiatan = TextEditingController();
+  final TextEditingController _controllerJumlah = TextEditingController();
 
   @override
   void dispose() {
     _controllerKegiatan.dispose();
+    _controllerJumlah.dispose();
     super.dispose();
   }
 
@@ -29,37 +31,47 @@ class _AddActivityState extends State<AddActivity> {
               decoration: const InputDecoration(
                 labelText: 'Nama Kegiatan',
                 hintText: "Contoh: Beli Buku",
-                border:
-                    OutlineInputBorder(), // Menambahkan border pada TextField
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+
+                // Menambahkan border pada TextField
                 prefixIcon: Icon(
                   Icons.edit,
+                  color: Colors.indigo,
                 ), // Menambahkan ikon di dalam TextField
               ),
             ),
             const SizedBox(height: 20),
+            TextField(
+              controller: _controllerJumlah,
+              decoration: const InputDecoration(
+                labelText: 'Jumlah',
+                hintText: "Contoh: 5",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                prefixIcon: Icon(Icons.money, color: Colors.indigo),
+              ),
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 30),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size.fromHeight(50),
               ),
               onPressed: () {
                 // logika tombol ditekan
-                if (_controllerKegiatan.text.isEmpty) {
-                  // Tampilkan pesan error jika input kosong
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Nama kegiatan tidak boleh kosong'),
-                    ),
-                  );
+                if (_controllerKegiatan.text.isNotEmpty &&
+                    _controllerJumlah.text.isNotEmpty) {
+                  Navigator.pop(context, {
+                    'kegiatan': _controllerKegiatan.text,
+                    'jumlah': int.tryParse(_controllerJumlah.text) ?? 0,
+                  });
                 } else {
-                  // ambil data dan kembali ke halaman sebelumnya
-                  String namaKegiatan = _controllerKegiatan.text;
-                  print(
-                    "Data Tersimpan: $namaKegiatan",
-                  ); // Contoh menyimpan data (bisa diganti dengan logika penyimpanan yang sebenarnya)
-                  Navigator.pop(
-                    context,
-                    namaKegiatan,
-                  ); // Kembali ke halaman sebelumnya dengan data
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Mohon isi semua field')),
+                  );
                 }
               },
               child: const Text('Simpan'),

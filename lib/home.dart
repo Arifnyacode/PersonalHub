@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:personalhub/add_activity.dart';
 import 'profile.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   Home({super.key});
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final List<String> daftarkegiatan = [
     "Beli makan siang",
     "Bayar listrik",
@@ -47,7 +52,26 @@ class Home extends StatelessWidget {
               ),
               title: Text(daftarkegiatan[index]), // Menampilkan nama kegiatan
               subtitle: const Text('Hari ini'), // Deskripsi singkat
-              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.delete, color: Colors.red),
+                    onPressed: () {
+                      // Aksi saat tombol delete ditekan
+                      print("Hapus kegiatan: ${daftarkegiatan[index]}");
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.edit, color: Colors.orange),
+                    onPressed: () {
+                      // Aksi saat tombol edit ditekan
+                      print("Edit kegiatan: ${daftarkegiatan[index]}");
+                    },
+                  ),
+                ],
+              ),
+
               onTap: () {
                 showDialog(
                   context: context,
@@ -74,11 +98,27 @@ class Home extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          // Navigasi ke halaman input kegiatan dan menunggu hasilnya
+          final hasilDariInput = await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const AddActivity()),
           );
+
+          // Setelah kembali dari halaman input, periksa apakah ada hasil yang valid
+          if (hasilDariInput != null && hasilDariInput['kegiatan'] != null) {
+            setState(() {
+              daftarkegiatan.add(hasilDariInput['kegiatan']);
+            });
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  "Kegiatan '${hasilDariInput['kegiatan']}' berhasil ditambahkan!",
+                ),
+                backgroundColor: Colors.green,
+              ),
+            );
+          }
         },
         backgroundColor: Colors.indigo,
         child: const Icon(Icons.add, color: Colors.white),
