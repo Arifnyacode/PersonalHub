@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AddActivity extends StatefulWidget {
-  const AddActivity({super.key});
+  //tambahkan variabel untuk penerima constructor
+
+  final String kategoriPilihan;
+
+  const AddActivity({super.key, required this.kategoriPilihan});
 
   @override
   State<AddActivity> createState() => _AddActivityState();
@@ -25,7 +29,23 @@ class _AddActivityState extends State<AddActivity> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                "Kategori: ${widget.kategoriPilihan}",
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
             TextField(
               controller: _controllerKegiatan,
               decoration: const InputDecoration(
@@ -46,35 +66,40 @@ class _AddActivityState extends State<AddActivity> {
             TextField(
               controller: _controllerJumlah,
               decoration: const InputDecoration(
-                labelText: 'Jumlah',
-                hintText: "Contoh: 5",
+                labelText: 'Nominal (Rp)',
+                hintText: "Contoh: 50000",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
-                prefixIcon: Icon(Icons.money, color: Colors.indigo),
+                prefixIcon: Icon(Icons.attach_money, color: Colors.indigo),
               ),
               keyboardType: TextInputType.number,
             ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size.fromHeight(50),
+            const SizedBox(height: 25),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size.fromHeight(50),
+                ),
+                onPressed: () {
+                  // logika tombol ditekan
+                  if (_controllerKegiatan.text.isNotEmpty &&
+                      _controllerJumlah.text.isNotEmpty) {
+                    Map<String, dynamic> newActivity = {
+                      'kegiatan': _controllerKegiatan.text,
+                      'nominal': int.tryParse(_controllerJumlah.text) ?? 0,
+                      'kategori': widget.kategoriPilihan,
+                    };
+                    Navigator.pop(context, newActivity);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Mohon isi semua field')),
+                    );
+                  }
+                },
+                child: const Text('Simpan'),
               ),
-              onPressed: () {
-                // logika tombol ditekan
-                if (_controllerKegiatan.text.isNotEmpty &&
-                    _controllerJumlah.text.isNotEmpty) {
-                  Navigator.pop(context, {
-                    'kegiatan': _controllerKegiatan.text,
-                    'jumlah': int.tryParse(_controllerJumlah.text) ?? 0,
-                  });
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Mohon isi semua field')),
-                  );
-                }
-              },
-              child: const Text('Simpan'),
             ),
           ],
         ),

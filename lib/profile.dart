@@ -16,8 +16,15 @@ class MyProfile extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Menambahkan widget Icon
-              const Icon(Icons.account_circle, size: 100, color: Colors.pink),
+              // Menambahkan widget Image
+              CircleAvatar(
+                radius: 70,
+                backgroundColor: Colors.blueAccent,
+                child: CircleAvatar(
+                  radius: 65,
+                  backgroundImage: AssetImage('assets/images/IMG_8722.JPG'),
+                ),
+              ),
               //menambahkan widget Text
               const Text(
                 'Nama: Arif Rahmadhani',
@@ -36,7 +43,10 @@ class MyProfile extends StatelessWidget {
                 children: const [
                   Icon(Icons.email, color: Colors.blue),
                   SizedBox(width: 10),
-                  Text('arif.rahmadhani@example.com'),
+                  Text(
+                    'arif.rahmadhani@example.com',
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ],
               ),
               const SizedBox(height: 10),
